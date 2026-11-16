@@ -24,17 +24,17 @@ const UserSchema = new mongooes.Schema(
     //   type: mongooes.Schema.Types.ObjectId,
     //   ref: project,
     // },
-    // favourites: {
-    //   colours: {
-    //     type: String,
-    //     default: [],
-    //   },
+    favourites: {
+      colours: {
+        type: [String],
+        default: [],
+      },
 
-    //   patterns: {
-    //     type: String,
-    //     default: [],
-    //   },
-    // },
+      patterns: {
+        type: [String],
+        default: [],
+      },
+    },
   },
   { timestamps: true },
 );
