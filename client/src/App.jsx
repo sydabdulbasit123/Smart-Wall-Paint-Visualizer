@@ -1,0 +1,15 @@
+import { Routes, Route } from "react-router-dom";
+import Register from "./components/register";
+import Login from "./components/login";
+
+
+const App = () => {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
+  );
+};
+
+export default App;
