@@ -2,10 +2,10 @@ const mongooes = require("mongoose");
 
 const connectDB = async () => {
   try {
-    await mongooes.connect(process.env.MONGO_URI);
-    console("MongoDB Connected Successfully!");
+    await mongooes.connect(process.env.MONGODB_URI);
+    console.log("MongoDB Connected Successfully!");
   } catch (error) {
-    console.error("Database Connection Failed:", error.message);
+    console.error("Database Connection Failed:", error);
     process.exit(1);
   }
 };
