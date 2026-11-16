@@ -1,7 +1,33 @@
 import { Link } from "react-router-dom";
 import { User, Mail, Lock } from "lucide-react";
+import { useState } from "react";
+import useauth from "../hooks/useauth";
 
 function Register() {
+  const [email, setEmail] = useState();
+  const [name, setName] = useState();
+  const [password, setPassword] = useState();
+
+  const { registerhandler, error, loading } = useauth();
+
+  const submithandler = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await registerhandler({
+        name,
+        email,
+        password,
+      });
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+
+    setName("");
+    setEmail("");
+    setPassword("");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4">
       <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-8 shadow-lg">
@@ -14,7 +40,12 @@ function Register() {
           </p>
         </div>
 
-        <form className="mt-8 space-y-5">
+        <form
+          onSubmit={(e) => {
+            submithandler(e);
+          }}
+          className="mt-8 space-y-5"
+        >
           {/* Full Name */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-900">
@@ -23,6 +54,11 @@ function Register() {
             <div className="relative">
               <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
+                required={true}
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
                 type="text"
                 placeholder="John Doe"
                 className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none placeholder:text-gray-400 focus:border-gray-900"
@@ -38,6 +74,11 @@ function Register() {
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
+                required={true}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 type="email"
                 placeholder="you@example.com"
                 className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none placeholder:text-gray-400 focus:border-gray-900"
@@ -53,6 +94,11 @@ function Register() {
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
+                required={true}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 type="password"
                 placeholder="••••••••"
                 className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none placeholder:text-gray-400 focus:border-gray-900"
@@ -60,11 +106,14 @@ function Register() {
             </div>
           </div>
 
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
           <button
             type="submit"
+            disabled={loading}
             className="w-full rounded-lg bg-gray-900 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800"
           >
-            Get Started
+            {loading ? "Registering..." : "Get Started"}
           </button>
 
           <p className="text-center text-xs text-gray-500">
