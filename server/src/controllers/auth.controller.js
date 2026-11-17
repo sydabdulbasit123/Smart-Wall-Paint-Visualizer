@@ -113,5 +113,20 @@ const login = async (req, res) => {
     });
   }
 };
+const getme = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const userdata = await User.findById(id).select("-password");
 
-module.exports = { register, login };
+    if (!userdata) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ userdata });
+  } catch (error) {
+    console.log(`error: ${error}`);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = { register, login, getme };

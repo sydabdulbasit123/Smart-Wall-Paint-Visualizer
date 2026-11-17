@@ -16,3 +16,10 @@ export const LoginUser = async (userData) => {
 
   return response.data;
 };
+export const getcurrentuser = async () => {
+  const response = await api.get(
+    "/auth/getme",
+  );
+
+  return response.data;
+};
