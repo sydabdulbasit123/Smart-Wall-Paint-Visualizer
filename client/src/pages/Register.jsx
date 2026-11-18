@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User, Mail, Lock } from "lucide-react";
 import { useState } from "react";
 import useauth from "../hooks/useauth";
 
 function Register() {
+    const  navigate =useNavigate()
+
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [password, setPassword] = useState();
@@ -19,6 +21,7 @@ function Register() {
         password,
       });
       console.log(data);
+      navigate("/")
     } catch (err) {
       console.log(err);
     }

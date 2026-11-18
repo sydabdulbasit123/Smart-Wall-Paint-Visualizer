@@ -1,9 +1,10 @@
 import { MailIcon, LockIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useauth from "../hooks/useauth";
 import { useState } from "react";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -18,6 +19,7 @@ function Login() {
         password,
       });
       console.log(data);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

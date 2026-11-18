@@ -1,4 +1,6 @@
 import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
 const features = [
   {
     number: "01",
@@ -29,61 +31,64 @@ const popularColors = [
 const rooms = [
   {
     name: "Living Room",
-    image:
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=700",
+    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=700",
   },
   {
     name: "Bedroom",
-    image:
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700",
+    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700",
   },
   {
     name: "Modern Interior",
-    image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700",
   },
 ];
 
 function Home() {
-
-const userData = useSelector((state) => state.user);
-
+  const userdata  = useSelector((state) => state.user.userData);
+  const navigate = useNavigate()
 
   return (
     <div className="bg-[#FAFAF7] text-[#252820] min-h-screen">
-
       {/* Navbar */}
       <nav className="flex items-center justify-between px-6 md:px-12 py-5 bg-white border-b border-gray-100">
-
         <a href="/" className="text-2xl font-bold text-[#526B50]">
           WallStudio.
         </a>
 
         <div className="hidden md:flex items-center gap-8 text-sm text-gray-600">
-          <a href="/" className="hover:text-[#526B50]">Home</a>
-          <a href="#colors" className="hover:text-[#526B50]">Colors</a>
-          <a href="#how-it-works" className="hover:text-[#526B50]">How it works</a>
-          <a href="#inspiration" className="hover:text-[#526B50]">Inspiration</a>
+          <Link to="/" className="hover:text-[#526B50]">
+            Home
+          </Link>
+          <a href="#colors" className="hover:text-[#526B50]">
+            Colors
+          </a>
+          <a href="#how-it-works" className="hover:text-[#526B50]">
+            How it works
+          </a>
+          <a href="#inspiration" className="hover:text-[#526B50]">
+            Inspiration
+          </a>
         </div>
 
         <div className="flex items-center gap-3">
-          <a href="/login" className="hidden sm:block text-sm font-medium">
+          {!userdata && <Link to="/login" className="hidden sm:block text-sm font-medium">
             Login
-          </a>
+          </Link>}
           <button
-            onClick={()=>{console.log(userData)}}
-            className="bg-[#526B50] text-white px-5 py-2.5 rounded-lg text-sm hover:bg-[#405640] transition"
-          > {userData ? "Dashboard":
-            "Get Started"}
+            onClick={() => {
+              navigate("/dashboard");
+            }}
+            className="bg-[#526B50] text-white px-5 py-2.5 rounded-lg text-sm hover:bg-[#405640] transition cursor-pointer"
+          >
+            {" "}
+            {userdata ? "Dashboard" : "Get Started"}
           </button>
         </div>
       </nav>
 
       {/* Hero Section */}
       <section className="px-6 md:px-12 py-12 md:py-20">
-
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-
           <div>
             <span className="text-sm font-medium text-[#526B50] uppercase tracking-widest">
               A new look starts here
@@ -94,24 +99,22 @@ const userData = useSelector((state) => state.user);
               <br />
               Your colors.
               <br />
-              <span className="text-[#71866C]">
-                Your vision.
-              </span>
+              <span className="text-[#71866C]">Your vision.</span>
             </h1>
 
             <p className="text-gray-500 mt-6 leading-7 max-w-md">
-              Discover the perfect paint colors for your home.
-              Upload your room, experiment with shades and
-              visualize your dream space before painting.
+              Discover the perfect paint colors for your home. Upload your room,
+              experiment with shades and visualize your dream space before
+              painting.
             </p>
 
             <div className="flex flex-wrap gap-4 mt-8">
-              <a
-                href="/register"
+              <Link
+                to={userdata ? "/dashboard" : "/register"}
                 className="bg-[#526B50] text-white px-7 py-3.5 rounded-lg hover:bg-[#405640] transition"
               >
                 Start Visualizing →
-              </a>
+              </Link>
 
               <a
                 href="#how-it-works"
@@ -144,15 +147,12 @@ const userData = useSelector((state) => state.user);
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
       {/* How it works */}
       <section id="how-it-works" className="py-20 px-6 md:px-12 bg-white">
-
         <div className="max-w-7xl mx-auto">
-
           <div className="text-center mb-14">
             <p className="text-sm uppercase tracking-widest text-[#526B50]">
               Simple process
@@ -164,28 +164,26 @@ const userData = useSelector((state) => state.user);
 
           <div className="grid md:grid-cols-3 gap-10">
             {features.map((feature) => (
-              <div key={feature.number} className="border-t border-gray-200 pt-6">
+              <div
+                key={feature.number}
+                className="border-t border-gray-200 pt-6"
+              >
                 <span className="text-3xl text-[#8A9C82] font-light">
                   {feature.number}
                 </span>
-                <h3 className="text-xl font-semibold mt-5">
-                  {feature.title}
-                </h3>
+                <h3 className="text-xl font-semibold mt-5">{feature.title}</h3>
                 <p className="text-gray-500 text-sm leading-6 mt-3">
                   {feature.description}
                 </p>
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
       {/* Popular Colors */}
       <section id="colors" className="py-20 px-6 md:px-12">
-
         <div className="max-w-7xl mx-auto">
-
           <div className="flex justify-between items-end mb-10">
             <div>
               <p className="text-sm uppercase tracking-widest text-[#526B50]">
@@ -196,7 +194,10 @@ const userData = useSelector((state) => state.user);
               </h2>
             </div>
 
-            <a href="/colors" className="text-sm text-[#526B50] hidden sm:block">
+            <a
+              href="/colors"
+              className="text-sm text-[#526B50] hidden sm:block"
+            >
               Explore all colors →
             </a>
           </div>
@@ -208,24 +209,17 @@ const userData = useSelector((state) => state.user);
                   className="h-28 md:h-40 rounded-xl border border-black/5"
                   style={{ backgroundColor: color.hex }}
                 />
-                <h3 className="text-sm font-medium mt-3">
-                  {color.name}
-                </h3>
-                <p className="text-xs text-gray-400 mt-1">
-                  {color.hex}
-                </p>
+                <h3 className="text-sm font-medium mt-3">{color.name}</h3>
+                <p className="text-xs text-gray-400 mt-1">{color.hex}</p>
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
       {/* Inspiration Gallery */}
       <section id="inspiration" className="py-20 px-6 md:px-12 bg-white">
-
         <div className="max-w-7xl mx-auto">
-
           <div className="mb-10">
             <p className="text-sm uppercase tracking-widest text-[#526B50]">
               Get inspired
@@ -243,20 +237,16 @@ const userData = useSelector((state) => state.user);
                   alt={room.name}
                   className="w-full h-72 object-cover group-hover:scale-105 transition duration-500"
                 />
-                <h3 className="font-semibold mt-4">
-                  {room.name}
-                </h3>
+                <h3 className="font-semibold mt-4">{room.name}</h3>
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
       {/* CTA */}
       <section className="px-6 md:px-12 py-20">
         <div className="max-w-7xl mx-auto bg-[#E8EDE3] rounded-2xl text-center py-16 px-6">
-
           <p className="text-sm text-[#526B50] uppercase tracking-widest">
             Your dream space awaits
           </p>
@@ -269,21 +259,18 @@ const userData = useSelector((state) => state.user);
             Start exploring colors and create a space you love.
           </p>
 
-          <a
-            href="/register"
+          <Link
+            to={userdata ? "/dashboard" :"/register"}
             className="inline-block mt-8 bg-[#526B50] text-white px-8 py-3.5 rounded-lg hover:bg-[#405640] transition"
           >
             Get Started →
-          </a>
-
+          </Link>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="bg-[#252D24] text-white px-6 md:px-12 py-10">
-
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
-
           <div>
             <h2 className="text-2xl font-bold">WallStudio.</h2>
             <p className="text-sm text-gray-400 mt-3">
@@ -297,7 +284,6 @@ const userData = useSelector((state) => state.user);
             <a href="/login">Login</a>
             <a href="/register">Register</a>
           </div>
-
         </div>
 
         <div className="max-w-7xl mx-auto border-t border-white/10 mt-10 pt-6">
@@ -305,9 +291,7 @@ const userData = useSelector((state) => state.user);
             © 2026 WallStudio. All rights reserved.
           </p>
         </div>
-
       </footer>
-
     </div>
   );
 }

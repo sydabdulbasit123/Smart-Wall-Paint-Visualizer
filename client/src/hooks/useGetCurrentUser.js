@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getcurrentuser } from "../services/auth.sevice";
 import { setUserData } from "../Redux/UserSclice";
@@ -18,7 +18,7 @@ const useGetCurrentUser = () => {
     };
 
     fetchUser();
-  }, [dispatch]);
+  }, []);
 };
 
 export default useGetCurrentUser;
