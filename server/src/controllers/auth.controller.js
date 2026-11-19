@@ -113,6 +113,20 @@ const login = async (req, res) => {
     });
   }
 };
+const logout = async (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 const getme = async (req, res) => {
   try {
     const { id } = req.user;
@@ -129,4 +143,4 @@ const getme = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getme };
+module.exports = { register, login, getme , logout };

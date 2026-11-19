@@ -2,13 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { User, Mail, Lock } from "lucide-react";
 import { useState } from "react";
 import useauth from "../hooks/useauth";
+import { setUserData } from "../Redux/UserSclice";
+import { useDispatch } from "react-redux";
 
 function Register() {
-    const  navigate =useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch;
 
-  const [email, setEmail] = useState();
-  const [name, setName] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
   const { registerhandler, error, loading } = useauth();
 
@@ -20,15 +23,16 @@ function Register() {
         email,
         password,
       });
-      console.log(data);
-      navigate("/")
+      dispatch(setUserData(data.user));
+
+      setName("");
+      setEmail("");
+      setPassword("");
+
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
     }
-
-    setName("");
-    setEmail("");
-    setPassword("");
   };
 
   return (

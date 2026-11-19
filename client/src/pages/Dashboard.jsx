@@ -1,4 +1,8 @@
-import { useSelector } from "react-redux";
+import { LogOut } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import useauth from "../hooks/useauth";
+import { setUserData } from "../Redux/UserSclice";
 
 const projects = [
   {
@@ -31,13 +35,28 @@ const colors = [
 ];
 
 function Dashboard() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { logouthandler } = useauth();
+
+  const handleLogout = async () => {
+    try {
+      await logouthandler();
+      dispatch(setUserData(null));
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const userdata = useSelector((state) => state.user.userData);
-  console.log(userdata)
+
   return (
     <div className="min-h-screen bg-[#F8F8F5] text-gray-800 flex">
       {/* Sidebar */}
       <aside className="hidden md:flex w-64 bg-white border-r p-6 flex-col">
-        <h1 className="text-xl font-bold text-[#526B50]">WallStudio.</h1>
+        <Link to={"/"}>
+          <h1 className="text-xl font-bold text-[#526B50]">WallStudio.</h1>
+        </Link>
 
         <p className="text-xs text-gray-400 mt-2 mb-10">
           YOUR SPACE, YOUR STYLE
@@ -66,8 +85,20 @@ function Dashboard() {
         </nav>
 
         <div className="mt-auto border-t pt-5">
-          <p className="font-medium text-sm">{userdata.userdata?.name}</p>
-          <p className="text-xs text-gray-400">Personal Account</p>
+          <div className="mb-4">
+            <p className="font-medium text-sm">{userdata?.name}</p>
+            <p className="text-xs text-gray-400">Personal Account</p>
+          </div>
+
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-3
+    rounded-lg text-sm text-red-500
+    hover:bg-red-50 transition"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
         </div>
       </aside>
 

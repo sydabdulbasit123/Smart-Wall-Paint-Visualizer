@@ -2,11 +2,14 @@ import { MailIcon, LockIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import useauth from "../hooks/useauth";
 import { useState } from "react";
+import { setUserData } from "../Redux/UserSclice";
+import { useDispatch } from "react-redux";
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const { loginhandler, loading, error } = useauth();
 
@@ -18,14 +21,15 @@ function Login() {
         email,
         password,
       });
-      console.log(data);
-      navigate("/");
+      dispatch(setUserData(data.user));
+
+      setEmail("");
+      setPassword("");
+
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
     }
-
-    setEmail("");
-    setPassword("");
   };
 
   return (

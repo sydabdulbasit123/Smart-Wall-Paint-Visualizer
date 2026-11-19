@@ -8,6 +8,7 @@ export const registerUser = async (userData) => {
 
   return response.data;
 };
+
 export const LoginUser = async (userData) => {
   const response = await api.post(
     "/auth/login",
@@ -16,6 +17,12 @@ export const LoginUser = async (userData) => {
 
   return response.data;
 };
+
+export const logoutUser = async () => {
+  const response = await api.post("/auth/logout");
+  return response.data;
+};
+
 export const getcurrentuser = async () => {
   const response = await api.get(
     "/auth/getme",

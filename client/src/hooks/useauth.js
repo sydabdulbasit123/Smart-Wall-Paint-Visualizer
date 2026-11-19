@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LoginUser, registerUser } from "../services/auth.sevice";
+import { LoginUser, logoutUser, registerUser } from "../services/auth.sevice";
 
 const useauth = () => {
   const [loading, setLoading] = useState(false);
@@ -15,6 +15,21 @@ const useauth = () => {
       return data;
     } catch (error) {
       setError(error.response?.data?.message || "Registration failed");
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+  const logouthandler = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const data = await logoutUser();
+
+      return data;
+    } catch (error) {
+      setError(error.response?.data?.message || "Logout Failed");
       throw error;
     } finally {
       setLoading(false);
@@ -36,7 +51,7 @@ const useauth = () => {
     }
   };
 
-  return { registerhandler, loading, error, loginhandler };
+  return { registerhandler, loading, error, loginhandler, logouthandler };
 };
 
 export default useauth;
