@@ -20,10 +20,10 @@ const UserSchema = new mongooes.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
-    // saved_project: {
-    //   type: mongooes.Schema.Types.ObjectId,
-    //   ref: project,
-    // },
+    saved_project: {
+      type: mongooes.Schema.Types.ObjectId,
+      ref: "Project",
+    },
     favourites: {
       colours: {
         type: [String],
